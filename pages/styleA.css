@@ -1,0 +1,54 @@
+/* Container for the boxes */
+.container {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    gap: 20px; 
+    padding: 20px;
+    height: 100vh;
+    justify-content: center;
+  
+  .box {
+    position: relative;
+    width: 100px; 
+    height: 100px;
+    background-color: #eee; 
+    border-top: 2px solid #ccc; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box; 
+    font-size: 24px; 
+    font-weight: bold;
+    transition: transform 0.3s ease;
+  }
+  
+  .box:hover {
+    transform: scale(1.1); 
+  }
+  
+  .box:nth-child(odd) {
+    background-color: #bbb; 
+  }
+  
+  .box:nth-child(even) {
+    background-color: #eee; 
+  }
+  
+  .box:nth-child(6) {
+    background: linear-gradient(45deg, #ff7e5f, #feb47b);
+  }
+  
+  .button-text {
+    color: #333; 
+  }
+  
+  @media (max-width: 600px) {
+    .container {
+      justify-content: center;
+    }
+    .box {
+      flex: 1 0 auto;
+    }
+  }
+}
