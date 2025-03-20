@@ -213,7 +213,7 @@ const datas = [
 
 
 
-export default function InfoCards() {
+export default function Home() {
   const [isCardView, setIsCardView] = useState(true);
   const [searchQuery, setSearchQuery] = useState(""); 
 
