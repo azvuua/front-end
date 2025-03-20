@@ -16,7 +16,7 @@ const Counter = () => {
         />
         <p className="ml-5">{type}</p> 
      </Form>
-    </div>
+    </div> 
   );
 };
 

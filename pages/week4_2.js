@@ -1,3 +1,9 @@
+
+import Image from "next/image";
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+
+
 const datas = [
     { //1
         id: 1,
@@ -17,7 +23,7 @@ const datas = [
                 name: "ohiorizz",
             }
         ]
-        
+
     },
 
     { //2
@@ -202,51 +208,117 @@ const datas = [
 ]
 
 
-import Image from "next/image";
-import React from 'react';
-import { useRouter } from 'next/router';
+
+
+
+
 
 export default function InfoCards() {
-    const router = useRouter();
-    
-    return (
-        <div className="min-h-screen bg-gray-100 flex flex-col items-center p-10">
-            <div className="w-full flex justify-start mb-6">
-                <button  className="p-3 shadow-lg shadow-indigo-500/40 text-purple-800" onClick={() => router.push("/week4_2")} >Row</button>
-            </div>
+  const [isCardView, setIsCardView] = useState(true);
+  const [searchQuery, setSearchQuery] = useState(""); 
 
-            <div className="grid  xl:grid-cols-4 gap-6 w-full">
-                {datas.map((person, index) => (
-                    <div key={index} className="bg-white shadow-md rounded-xl p-5 flex flex-col items-center">
-                        <img 
-                            src={person.image} 
-                            alt={`${person.firstName} ${person.lastname}`} 
-                            className="w-24 h-24 rounded-full border-2 border-gray-300 mb-3"
-                        />
-                        <h2 className="text-lg font-semibold text-gray-800">
-                            {person.firstName} {person.lastname}
-                        </h2>
-                        <p className="text-gray-600">{person.job}</p>
-                        <p className="text-gray-400 text-sm">Height: {person.height}</p>
-                        <p className="text-green-500 text-sm">
-                            {person.alive ? "Alive" : "Dead"}
-                        </p>
+  const filteredItems = datas.filter((item) => {
+    return item?.firstName?.toLowerCase().includes(searchQuery?.toLowerCase() || '');
+  });
+  
+  console.log(filteredItems);
 
-                        {person.items && person.items.length > 0 && (
-                            <div className="text-gray-500 text-sm mt-2">
-                                <h3 className="font-semibold">Items:</h3>
-                                <div>
-                                    {person.items.map((item, itemIndex) => (
-                                        <div key={itemIndex}>
-                                            ID: {item.id}, Name: {item.name}
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                ))}
+  return (
+    <div className="min-h-screen bg-gray-100 p-10">
+      <div className="fixed top-0 left-0 w-full bg-gray-100 text-blue-900 flex justify-between p-4 shadow-md z-10">
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search items..."
+          className="border p-2 rounded w-full mb-4"
+        />
+
+        <button
+          className="p-3 mb-5 shadow-lg shadow-indigo-500/40 text-purple-800"
+          onClick={() => setIsCardView((prevState) => !prevState)}
+        >
+          {isCardView ? "Row View" : "Card View"}
+        </button>
+      </div>
+
+      {isCardView ? (
+        
+        <div className="flex flex-col gap-6 mt-24">
+          {filteredItems.map((person, index) => (
+            
+            <div
+              key={index}
+              className="bg-white shadow-md rounded-xl p-3 flex items-center w-full h-[60px] space-x-4"
+            >
+              <img
+                src={person.image}
+                alt={`${person.firstName} ${person.lastname}`}
+                className="w-12 h-12 rounded-full border-2 border-gray-300"
+              />
+
+              <div className="flex-1">
+                <h2 className="text-sm font-semibold text-gray-800">
+                  {person.firstName} {person.lastname}
+                </h2>
+                <p className="text-gray-600 text-xs">{person.job}</p>
+              </div>
+
+              <div className="text-gray-400 text-xs">Height: {person.height}</div>
+
+              <div className="text-green-500 text-xs">
+                {person.alive ? "Alive" : "Dead"}
+              </div>
+
+              {person.items && person.items.length > 0 && (
+                <div className="text-gray-500 text-xs">
+                  {person.items.map((item, itemIndex) => (
+                    <span key={itemIndex} className="ml-2">
+                      ID: {item.id}, Name: {item.name}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
+          ))}
         </div>
-    );
+      ) : (
+        <div className="grid xl:grid-cols-4 gap-6 mt-24 w-full">
+          {filteredItems.map((person, index) => (
+            <div
+              key={index}
+              className="bg-white shadow-md rounded-xl p-5 flex flex-col items-center"
+            >
+              <img
+                src={person.image}
+                alt={`${person.firstName} ${person.lastname}`}
+                className="w-24 h-24 rounded-full border-2 border-gray-300 mb-3"
+              />
+              <h2 className="text-lg font-semibold text-gray-800">
+                {person.firstName} {person.lastname}
+              </h2>
+              <p className="text-gray-600">{person.job}</p>
+              <p className="text-gray-400 text-sm">Height: {person.height}</p>
+              <p className="text-green-500 text-sm">
+                {person.alive ? "Alive" : "Dead"}
+              </p>
+
+              {person.items && person.items.length > 0 && (
+                <div className="text-gray-500 text-sm mt-2">
+                  <h3 className="font-semibold">Items:</h3>
+                  <div>
+                    {person.items.map((item, itemIndex) => (
+                      <div key={itemIndex}>
+                        ID: {item.id}, Name: {item.name}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 }
