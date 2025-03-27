@@ -215,13 +215,11 @@ const datas = [
 
 export default function Home() {
   const [isCardView, setIsCardView] = useState(true);
-  const [searchQuery, setSearchQuery] = useState(""); 
+  const [searchQuery, setSearchQuery] = useState("");
 
   const filteredItems = datas.filter((item) => {
     return item?.firstName?.toLowerCase().includes(searchQuery?.toLowerCase() || '');
   });
-  
-  console.log(filteredItems);
 
   return (
     <div className="min-h-screen bg-gray-100 p-10">
@@ -243,10 +241,8 @@ export default function Home() {
       </div>
 
       {isCardView ? (
-        
         <div className="flex flex-col gap-6 mt-24">
           {filteredItems.map((person, index) => (
-            
             <div
               key={index}
               className="bg-white shadow-md rounded-xl p-3 flex items-center w-full h-[60px] space-x-4"
@@ -283,7 +279,7 @@ export default function Home() {
           ))}
         </div>
       ) : (
-        <div className="grid xl:grid-cols-4 gap-6 mt-24 w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-24 w-full">
           {filteredItems.map((person, index) => (
             <div
               key={index}
